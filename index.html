@@ -1,0 +1,134 @@
+<html>
+
+<head>
+    <title>Pixel Style</title>
+    <style>
+        * {
+            margin: 0px auto;
+            padding: 0px;
+        }
+
+        body html {
+            width: 100%;
+            height: 100%;
+        }
+
+        #bg_gif {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            image-rendering: pixelated;
+        }
+
+        #sidebar {
+            width: 0px;
+            height: 100%;
+            position: fixed;
+            top: 0px;
+            right: 0px;
+            z-index: 5;
+            background-color: white;
+            overflow-y: scroll;
+        }
+
+        #sidebar::-webkit-scrollbar {
+            /* 定义滚动条样式 */
+            width: 6px;
+            height: 6px;
+            background-color: white;
+        }
+
+        #sidebar::-webkit-scrollbar-track {
+            /*定义滚动条轨道 内阴影+圆角*/
+            box-shadow: inset 0 0 0px;
+            border-radius: 10px;
+            background-color: #BBB;
+        }
+
+        #sidebar::-webkit-scrollbar-thumb {
+            /*定义滑块 内阴影+圆角*/
+            border-radius: 10px;
+            box-shadow: inset 0 0 0px #333;
+            background-color: #444;
+        }
+
+        #sidebar_pic {
+            width: 100%;
+        }
+
+        .sidebar_pics {
+            width: 80%;
+            margin: 0.5rem 10%;
+            border-radius: 0.5rem;
+        }
+
+        #sidebar_btn {
+            width: 2rem;
+            height: 2rem;
+            opacity: 0.4;
+            z-index: 3;
+            border-radius: 1rem;
+            background: black;
+            position: fixed;
+            top: 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            right: 2rem;
+        }
+
+        #sidebar_btn img {
+            max-width: 70%;
+            max-height: 70%;
+        }
+    </style>
+</head>
+
+<body>
+    <img id="bg_gif" onclick="sidebar_off()" ondragstart="return false;" src=".\img\10.gif">
+    <div id="sidebar">
+        <div id="sidebar_pic"></div>
+    </div>
+    <div id="sidebar_btn" onclick="sidebar_on()"><img src="./img/infinity.png"></div>
+    <script>
+        function setCookie(cname, cvalue, exdays) {
+            var d = new Date();
+            d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+            var expires = "expires=" + d.toGMTString();
+            document.cookie = cname + "=" + cvalue + "; " + expires;
+        }
+        function getCookie(name) {
+            var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
+            if (arr = document.cookie.match(reg))
+                return unescape(arr[2]);
+            else
+                return null;
+        }
+        function toggleBg(e) {
+            document.getElementById('bg_gif').setAttribute('src', e.src.substr(0, e.src.length - 4) + '.gif');
+            setCookie('bg', e.src.substr(0, e.src.length - 4) + '.gif', 365);
+        }
+        function sidebar_off() {
+            document.getElementById('sidebar').style.width = '0px';
+        }
+        function sidebar_on() {
+            document.getElementById('sidebar').style.width = '10rem';
+        }
+        window.onload = function () {
+            {//读取默认壁纸
+                var bg = getCookie('bg');
+                if (bg != null) { document.getElementById('bg_gif').src = bg; }
+            }
+            {//添加本地47个图片
+                var s = '';
+                for (var i = 1; i <= 47; i++) {
+                    s = s + '<img class="sidebar_pics" onclick="toggleBg(this)" src=".\\img\\' + i + '.jpg">';
+                }
+                document.getElementById('sidebar_pic').innerHTML = s;
+            }
+        }
+    </script>
+</body>
+
+</html>
