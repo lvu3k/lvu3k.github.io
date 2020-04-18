@@ -115,18 +115,22 @@
         function sidebar_on() {
             document.getElementById('sidebar').style.width = '10rem';
         }
+        document.onreadystatechange = function () {
+            switch (document.readyState) {
+                case 'loading':
+                case 'interactive':
+                    var bg = getCookie('bg');
+                    if (bg != null) { document.getElementById('bg_gif').src = bg; }
+                case 'complete':
+            }
+        }
         window.onload = function () {
-            {//读取默认壁纸
-                var bg = getCookie('bg');
-                if (bg != null) { document.getElementById('bg_gif').src = bg; }
+            //添加本地47个图片
+            var s = '';
+            for (var i = 1; i <= 47; i++) {
+                s = s + '<img class="sidebar_pics" onclick="toggleBg(this)" src=".\\img\\' + i + '.jpg">';
             }
-            {//添加本地47个图片
-                var s = '';
-                for (var i = 1; i <= 47; i++) {
-                    s = s + '<img class="sidebar_pics" onclick="toggleBg(this)" src=".\\img\\' + i + '.jpg">';
-                }
-                document.getElementById('sidebar_pic').innerHTML = s;
-            }
+            document.getElementById('sidebar_pic').innerHTML = s;
         }
     </script>
 </body>
