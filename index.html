@@ -86,7 +86,7 @@
 </head>
 
 <body>
-    <img id="bg_gif" onclick="sidebar_off()" ondragstart="return false;" src=".\img\10.gif">
+    <img id="bg_gif" onclick="sidebar_off()" ondragstart="return false;">
     <div id="sidebar">
         <div id="sidebar_pic"></div>
     </div>
@@ -119,8 +119,10 @@
             switch (document.readyState) {
                 case 'loading':
                 case 'interactive':
+                    //加载默认壁纸
                     var bg = getCookie('bg');
-                    if (bg != null) { document.getElementById('bg_gif').src = bg; }
+                    if (bg != null)  document.getElementById('bg_gif').src = bg;
+                    else document.getElementById('bg_gif').src = '.\\img\\20.gif';
                 case 'complete':
             }
         }
